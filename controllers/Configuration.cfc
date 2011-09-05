@@ -147,7 +147,7 @@
 						// TODO: Add support for Railo
 						var loc = {};
 						info = [];
-						loc.message = "Railo is not supported at the moment";
+						loc.message = "Railo is not supported at the this time";
 						arrayAppend(info, loc.message);
 						$abortInstallation(info);
 					}
