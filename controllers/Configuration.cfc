@@ -1,7 +1,7 @@
 ﻿<!---  --->
 <cfcomponent displayname="Configuration" extends="Controller" output="false">
-	<!--- todo: use dbmigratration tool to create the database, create the user model class using Russ Johns login template --->
-
+	<!--- todo: use dbmigratration tool to create the database, create the user model class using Russ 
+	Johns login template --->
 	<!--- Public methods --->
 	
 	<cffunction name="init">
@@ -9,6 +9,7 @@
 		
 		<cfset filters(through="checkAppServer", except="checkAppServer")>
 		<cfset filters(through="AppServerVersion", except="AppServerVersion")>
+		<cfset filters(through="isAppConfigured", execpt="isAppConfigured")>
 	</cffunction>
 	
 	<cffunction name="checkAppServer" 
@@ -41,6 +42,13 @@
 			}
 		</cfscript>
 		
+	</cffunction>
+	
+	<cffunction name="isAppConfigured" hint="Checks if the application has been configured">
+		<cfset configPath = expandPath("config/")>
+		<cfif NOT fileExists(configPath & "config.json.cfm")>
+			<cfset redirectTo(controller="main", action="alreadyInstalled")>
+		</cfif>
 	</cffunction>
 	
 	<cffunction name="canelInstallation" 
@@ -113,7 +121,7 @@
 			requiredFields.adminPassword = params.adminPassword;
 			requiredFields.serverName = params.serverName;
 			requiredFields.dbName = params.dbName;
-			
+		
 			//Checks if it contains error messages
 			if(isArray($isEmpty(requiredFields)))
 			{
@@ -209,8 +217,6 @@
 		
 	</cffunction>
 	
-	
-	
 	<!--- Private methods --->
 	
 	<cffunction name="$saveToSession" access="private" 
@@ -297,7 +303,7 @@
 			//Login to the coldfusion administrator
 			var CFAdminAuthObj = createObject("component", "CFIDE.adminapi.administrator");
 			loc.auth.result = CFAdminAuthObj.login(adminPassword="#arguments.adminpassword#", 
-			                                    adminUserId="#arguments.adminusername#");
+			                                       adminUserId="#arguments.adminusername#");
 			//Confirms if the username and password supplied are correct
 			if(loc.auth.result)
 			{
@@ -371,7 +377,7 @@
 	</cffunction>
 	
 	<cffunction name="$saveConfiguration" access="private" hint="creates the configuration file">
-		<cfdump var="#session#" abort="true" >
+		<cfdump var="#session#" abort="true">
 	</cffunction>
 	
 </cfcomponent>
