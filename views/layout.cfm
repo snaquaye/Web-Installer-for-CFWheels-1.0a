@@ -3,7 +3,7 @@
 	<head>
 		<title>Web Installer</title>
 		<cfoutput>
-			#javaScriptIncludeTag(sources="jquery-1.5.2.min, script")#
+			#javaScriptIncludeTag(sources="jquery-1.5.2.min, scripts")#
 		</cfoutput>
 	</head>
 	<body>

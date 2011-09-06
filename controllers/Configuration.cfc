@@ -9,7 +9,7 @@
 		
 		<cfset filters(through="checkAppServer", except="checkAppServer")>
 		<cfset filters(through="AppServerVersion", except="AppServerVersion")>
-		<cfset filters(through="isAppConfigured", execpt="isAppConfigured")>
+		<cfset filters(through="isAppConfigured", except="isAppConfigured")>
 	</cffunction>
 	
 	<cffunction name="checkAppServer" 
@@ -46,7 +46,7 @@
 	
 	<cffunction name="isAppConfigured" hint="Checks if the application has been configured">
 		<cfset configPath = expandPath("config/")>
-		<cfif NOT fileExists(configPath & "config.json.cfm")>
+		<cfif fileExists(configPath & "config.json.cfm")>
 			<cfset redirectTo(controller="main", action="alreadyInstalled")>
 		</cfif>
 	</cffunction>
